@@ -152,6 +152,31 @@
     background:none; border:1px solid var(--line); color:var(--ink-soft); font-family:'Heebo'; font-size:12px;
     padding:6px 12px; border-radius:20px; cursor:pointer;
   }
+
+  /* QUESTIONNAIRE */
+  .quest-progress{ height:6px; background:var(--paper-raised); border:1px solid var(--line); border-radius:4px; overflow:hidden; margin-bottom:26px; }
+  .quest-progress-fill{ height:100%; background:var(--gold); transition:width .3s; }
+  .quest-form{ display:flex; flex-direction:column; gap:20px; margin-bottom:28px; }
+  .quest-q label{ display:block; font-size:14px; margin-bottom:8px; font-weight:500; }
+  .opt-tag{ font-weight:400; color:var(--ink-soft); font-size:12px; }
+  .quest-q textarea{
+    width:100%; box-sizing:border-box; font-family:'Heebo'; font-size:14px; padding:12px 14px;
+    border:1px solid var(--line); border-radius:2px; background:#fff; resize:vertical; line-height:1.6;
+  }
+  .quest-q textarea:focus{ outline:none; border-color:var(--gold); }
+  .quest-nav{ display:flex; justify-content:space-between; align-items:center; margin-top:10px; }
+  .quest-btn{
+    padding:11px 22px; background:var(--ink); color:var(--paper-raised); border:none; border-radius:2px;
+    font-family:'Heebo'; font-size:14px; font-weight:600; cursor:pointer;
+  }
+  .quest-btn:hover{ background:var(--slate); }
+  .quest-btn.secondary{ background:none; border:1px solid var(--line); color:var(--ink-soft); font-weight:400; }
+  .quest-btn.secondary:hover{ background:var(--paper-raised); }
+  .gamma-outline{
+    width:100%; box-sizing:border-box; min-height:420px; font-family:'Heebo'; font-size:13px; line-height:1.7;
+    padding:18px 20px; border:1px solid var(--line); border-radius:2px; background:#fff; resize:vertical; margin-bottom:16px;
+  }
+  .copy-msg{ text-align:left; color:var(--sage); font-size:12.5px; margin-top:8px; min-height:16px; }
 </style>
 </head>
 <body>
@@ -282,6 +307,37 @@ const COMP_BOTTOM = [ ['שירות פנים-ארגוני מכוון תושב',2]
 let current = 'org';
 let isAdmin = false;
 let restrictedTo = null; // station index if logged in with a station code
+let viewMode = 'data'; // 'data' | 'quest' (station logins only)
+let questStep = 0;
+let questAnswers = {}; // { qId: text }
+
+const QUEST_SECTIONS = [
+  { title: 'מבט על הנתונים', qs: [
+    { id:'q1', label:'מה הכי הפתיע אתכם בנתוני התחנה שלכם?' },
+    { id:'q2', label:'איפה התחושה שלכם על הצוות תואמת את הנתונים — ואיפה יש פער?' },
+    { id:'q3', label:'(אם רלוונטי) יש לכם הסבר לפער בין קובץ ההערכה העצמית לקובץ המנהל בתחנה שלכם?', optional:true },
+  ]},
+  { title: 'בחירת כיוון', qs: [
+    { id:'q4', label:'מתוך שלושת הכיוונים — יעד שכונתי/אזורי, פיתוח צוות, פיתוח שדה מקצועי — מה הכי דחוף לתחנה שלכם השנה, ולמה?' },
+    { id:'q5', label:'איזה מששת הצירים העירוניים הכי רלוונטי לתחנה שלכם כרגע?' },
+    { id:'q6', label:'יש ציר שמרגיש "חסר" בתכנון של התחנה שלכם, למרות שהוא אמור להיות שם?', optional:true },
+  ]},
+  { title: 'פיתוח צוות', qs: [
+    { id:'q7', label:'מה דבר אחד שהייתם רוצים שהצוות יחווה יחד השנה, שעוד לא קרה?' },
+    { id:'q8', label:'מי בצוות צריך הכי הרבה תשומת לב ניהולית השנה — ולמה?' },
+    { id:'q9', label:'איך תדעו בעוד שנה שפיתוח הצוות הצליח? מה יהיה שונה בפועל?' },
+  ]},
+  { title: 'איזון עומסים', qs: [
+    { id:'q10', label:'בהינתן העומס הקיים, על מה אתם מוכנים "לוותר" כדי לפנות מקום ליעד החדש?' },
+    { id:'q11', label:'מה מהיעדים האלה אפשר לשלב בעבודה השוטפת, ומה דורש זמן ייעודי נפרד?' },
+  ]},
+  { title: 'צעד ראשון', qs: [
+    { id:'q12', label:'מהו הצעד הראשון שאפשר לעשות בתוך שבועיים?' },
+    { id:'q13', label:'מה אתם צריכים מזהבה או מהארגון כדי שזה יצליח?' },
+    { id:'q14', label:'עם מי בצוות תשתפו את הכיוון הזה קודם, ומתי?' },
+  ]},
+];
+
 
 // Access codes — random 4-digit codes, one per station manager + one admin code for זהבה.
 // Hand these out separately from the file itself (see printable list provided alongside this tool).
@@ -314,6 +370,7 @@ function tryLogin(){
   } else {
     isAdmin = false; restrictedTo = match; current = match;
   }
+  viewMode = 'data'; questStep = 0; questAnswers = {};
   document.getElementById('gate').style.display = 'none';
   document.getElementById('app').style.display = 'block';
   render();
@@ -321,7 +378,11 @@ function tryLogin(){
 document.getElementById('gateBtn').addEventListener('click', tryLogin);
 document.getElementById('gateInput').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
 document.getElementById('logoutBtn').addEventListener('click', () => {
+  if (Object.keys(questAnswers).some(k => questAnswers[k]?.trim())){
+    if (!confirm('התשובות לשאלון לא נשמרות בין כניסות. לצאת בכל זאת?')) return;
+  }
   isAdmin = false; restrictedTo = null; current = 'org';
+  viewMode = 'data'; questStep = 0; questAnswers = {};
   document.getElementById('gateInput').value = '';
   document.getElementById('app').style.display = 'none';
   document.getElementById('gate').style.display = 'flex';
@@ -349,11 +410,16 @@ function axisMarker(axis, pct){
 function renderNav(){
   const nav = document.getElementById('nav');
   if (restrictedTo !== null){
-    // non-admin: no station switcher, just a locked indicator of whose data this is
+    // non-admin: no station switcher, just a toggle between data view and questionnaire
     nav.innerHTML = `<div class="nav-head">גישה אישית</div>
-      <div style="padding:16px; font-size:13px; line-height:1.6; color:var(--ink-soft);">
-        מחוברים כ<b style="color:var(--ink)">${STATIONS[restrictedTo].name}</b>.<br>מוצגים רק נתוני התחנה שלכם וכלל השפ"ח.
-      </div>`;
+      <div style="padding:14px 16px 10px; font-size:13px; line-height:1.6; color:var(--ink-soft); border-bottom:1px solid var(--line);">
+        מחוברים כ<b style="color:var(--ink)">${STATIONS[restrictedTo].name}</b>.
+      </div>
+      <button class="station-btn ${viewMode==='data'?'active':''}" data-view="data"><span>תמונת מצב</span></button>
+      <button class="station-btn ${viewMode==='quest'?'active':''}" data-view="quest"><span>שאלון אישי</span></button>`;
+    nav.querySelectorAll('[data-view]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{ viewMode = btn.dataset.view; questStep = 0; render(); });
+    });
     return;
   }
   let html = `<div class="nav-head">תחנות</div>`;
@@ -435,6 +501,11 @@ function render(){
   renderNav();
   const main = document.getElementById('main');
 
+  if (restrictedTo !== null && viewMode === 'quest'){
+    renderQuestionnaire(main);
+    return;
+  }
+
   if (current === 'org'){
     main.innerHTML = `
       <div class="panel-title"><h2>כלל השפ"ח</h2></div>
@@ -473,6 +544,107 @@ function render(){
       ${compSection()}
     `;
   }
+}
+
+function renderQuestionnaire(main){
+  const s = STATIONS[restrictedTo];
+  const totalSteps = QUEST_SECTIONS.length;
+  if (questStep < totalSteps){
+    const section = QUEST_SECTIONS[questStep];
+    let qsHtml = section.qs.map(q => `
+      <div class="quest-q">
+        <label>${q.label}${q.optional?' <span class="opt-tag">(לא חובה)</span>':''}</label>
+        <textarea data-qid="${q.id}" rows="3" placeholder="כתבו כאן...">${questAnswers[q.id]||''}</textarea>
+      </div>`).join('');
+    main.innerHTML = `
+      <div class="panel-title"><h2>שאלון אישי — ${s.name}</h2></div>
+      <p class="panel-sub">חלק ${questStep+1} מתוך ${totalSteps}: ${section.title} · התשובות לא נשמרות אוטומטית בין כניסות</p>
+      <div class="quest-progress"><div class="quest-progress-fill" style="width:${Math.round(questStep/totalSteps*100)}%"></div></div>
+      <div class="quest-form">${qsHtml}</div>
+      <div class="quest-nav">
+        ${questStep>0 ? `<button class="quest-btn secondary" id="questBack">הקודם</button>` : `<span></span>`}
+        <button class="quest-btn" id="questNext">${questStep===totalSteps-1?'סיום — לבניית המצגת':'הבא'}</button>
+      </div>
+    `;
+    main.querySelectorAll('textarea[data-qid]').forEach(ta=>{
+      ta.addEventListener('input', ()=>{ questAnswers[ta.dataset.qid] = ta.value; });
+    });
+    if (questStep>0) document.getElementById('questBack').addEventListener('click', ()=>{ questStep--; render(); });
+    document.getElementById('questNext').addEventListener('click', ()=>{ questStep++; render(); });
+  } else {
+    renderQuestSummary(main, s);
+  }
+}
+
+function buildGammaOutline(s){
+  const a = questAnswers;
+  const ph = (val, note) => (val && val.trim()) ? val.trim() : `◻ ${note} — מלאו או מחקו`;
+  return `# תכנית עבודה — ${s.name}
+${s.role}${s.tag?' · '+s.tag:''}
+
+## תמונת מצב (נתונים לדוגמה — עדכנו או מחקו)
+- עמידה ביעדים (דיווח עצמי): ◻ ${s.completion.toFixed(2)} מתוך 5
+- פער דירוג מנהל מול עצמי: ◻ ${fmtGap(s.gap)}
+- שביעות רצון כללית (הערכת מנהל): ◻ ${s.mgr.sat.toFixed(2)} מתוך 4
+
+## מה עלה מהנתונים
+${ph(a.q1,'מה הפתיע בנתונים')}
+${ph(a.q2,'התאמה/פער בין התחושה לנתונים')}
+
+## הכיוון שנבחר לשנה הקרובה
+${ph(a.q4,'הכיוון המרכזי ולמה')}
+${ph(a.q5,'הציר העירוני הרלוונטי')}
+
+## פיתוח צוות
+${ph(a.q7,'חוויה משותפת רצויה לצוות')}
+${ph(a.q8,'מי צריך תשומת לב ניהולית ולמה')}
+${ph(a.q9,'איך נדע שהצלחנו')}
+
+## איזון עומסים
+${ph(a.q10,'על מה מוותרים כדי לפנות מקום')}
+${ph(a.q11,'מה משולב בשוטף ומה דורש זמן נפרד')}
+
+## צעד ראשון
+${ph(a.q12,'הצעד הראשון בתוך שבועיים')}
+${ph(a.q13,'מה נדרש מזהבה/מהארגון')}
+${ph(a.q14,'עם מי משתפים קודם')}`;
+}
+
+function renderQuestSummary(main, s){
+  const outline = buildGammaOutline(s);
+  main.innerHTML = `
+    <div class="panel-title"><h2>פרומפט למצגת — ${s.name}</h2></div>
+    <p class="panel-sub">בדקו ועדכנו את הטקסט למטה (שורות המסומנות ב-◻ הן דוגמאות/נתונים לעריכה חופשית), ואז הדביקו ב-Gamma (Paste in text).</p>
+    <textarea id="gammaOutline" class="gamma-outline">${outline}</textarea>
+    <div class="quest-nav">
+      <button class="quest-btn secondary" id="questEditBack">חזרה לעריכת התשובות</button>
+      <div style="display:flex; gap:10px;">
+        <button class="quest-btn secondary" id="downloadTxt">הורדה כקובץ טקסט</button>
+        <button class="quest-btn" id="copyOutline">העתק ללוח</button>
+      </div>
+    </div>
+    <div class="copy-msg" id="copyMsg"></div>
+  `;
+  document.getElementById('questEditBack').addEventListener('click', ()=>{ questStep = QUEST_SECTIONS.length-1; render(); });
+  document.getElementById('copyOutline').addEventListener('click', ()=>{
+    const ta = document.getElementById('gammaOutline');
+    ta.select();
+    navigator.clipboard.writeText(ta.value).then(()=>{
+      document.getElementById('copyMsg').textContent = 'הועתק ללוח ✓';
+    }).catch(()=>{
+      document.execCommand('copy');
+      document.getElementById('copyMsg').textContent = 'הועתק ללוח ✓';
+    });
+  });
+  document.getElementById('downloadTxt').addEventListener('click', ()=>{
+    const text = document.getElementById('gammaOutline').value;
+    const blob = new Blob([text], {type:'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url; link.download = `תכנית_עבודה_${s.name.replace(/\s/g,'_')}.txt`;
+    link.click();
+    URL.revokeObjectURL(url);
+  });
 }
 
 document.getElementById('methodBtn').addEventListener('click', ()=>{
