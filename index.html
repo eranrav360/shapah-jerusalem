@@ -487,10 +487,11 @@ function renderNav(){
       </div>
       <button class="station-btn ${viewMode==='domain'?'active':''}" data-mode="domain"><span>תמונת מצב תחומית</span></button>
       <button class="station-btn ${viewMode==='quest'?'active':''}" data-mode="quest"><span>שאלון אישי</span></button>
-      <div class="nav-head">כלל השפ"ח (כמו זהבה)</div>`;
+      <div class="nav-head">כלל התחנות</div>`;
     html += `<button class="station-btn ${viewMode==='data' && current==='org'?'active':''}" data-mode="data" data-id="org">
       <span>כלל השפ"ח</span><span class="n">111</span></button>`;
     STATIONS.forEach((s,i)=>{
+      if (i === 0) return; // זהבה רוזנטל (הנהלה) — לא מוצגת למחוברי דומיין, זהו הצוות האישי של הממונה עליהם
       html += `<button class="station-btn ${viewMode==='data' && current===i?'active':''}" data-mode="data" data-id="${i}">
         <span>${s.name}${s.tag?` <span style="opacity:.6">· ${s.tag}</span>`:''}</span>
         <span class="n">${s.n}</span></button>`;
@@ -637,6 +638,7 @@ function render(){
   if (domainIdx !== null){
     if (viewMode === 'quest'){ renderDomainQuestionnaire(main); return; }
     if (viewMode === 'domain'){ renderDomainView(main); return; }
+    if (current === 0){ current = 'org'; } // safeguard: זהבה's personal station data is never shown to domain logins
     // viewMode === 'data': fall through to the shared org/station view below (same as admin)
   }
 
