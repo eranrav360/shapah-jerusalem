@@ -182,7 +182,7 @@
 
 <div id="gate">
   <div class="gate-card">
-    <h2> תובנות ניהוליות — שפ"ח ירושלים</h2>
+    <h2>תובנות ניהוליות — שפ"ח</h2>
     <p>הזינו את קוד הגישה האישי שקיבלתם לצפייה בנתוני התחנה שלכם.</p>
     <input type="text" id="gateInput" placeholder="קוד גישה" autocomplete="off">
     <button id="gateBtn">כניסה</button>
@@ -256,39 +256,39 @@ const ICONS = {
 const ORG_AXES = { ud:11, core:46, matrix:27, cross:10, early:21, multi:15 };
 
 const STATIONS = [
-  { name:'זהבה רוזנטל', tag:'הנהלה', role:'ראש השפ"ח', n:17, completion:3.56, gap:0.50,
+  { name:'זהבה רוזנטל', designTheme:'רשמי ואלגנטי, גווני כחול-אפור עמוקים וטיפוגרפיה נקייה', tag:'הנהלה', role:'ראש השפ"ח', n:17, completion:3.56, gap:0.50,
     axes:{ ud:6, core:24, matrix:35, cross:18, early:29, multi:53 },
     mgr:{ know:3.59, service:3.35, rules:3.71, sat:3.76, n:17 } },
-  { name:'אוסנת ריינמן', tag:null, role:'מנהלת צוות אזורי', n:16, completion:3.32, gap:0.31,
+  { name:'אוסנת ריינמן', designTheme:'חם ומודרני, גווני חרס וארגמן עדינים', tag:null, role:'מנהלת צוות אזורי', n:16, completion:3.32, gap:0.31,
     axes:{ ud:12, core:62, matrix:44, cross:12, early:19, multi:6 },
     mgr:{ know:3.44, service:3.62, rules:3.62, sat:3.88, n:16 } },
-  { name:'שיפרה קלמנוביץ', tag:null, role:'מנהלת צוות אזורי', n:13, completion:3.66, gap:-0.31,
+  { name:'שיפרה קלמנוביץ', designTheme:'רגוע ואיכותי, גווני ירוק זית ולבן שמנת', tag:null, role:'מנהלת צוות אזורי', n:13, completion:3.66, gap:-0.31,
     axes:{ ud:23, core:46, matrix:15, cross:15, early:15, multi:8 },
     mgr:{ know:3.77, service:3.92, rules:4.00, sat:4.00, n:13 } },
-  { name:'עטרה בר סלע', tag:'חרדי', role:'מנהלת צוות אזורי חרדי', n:11, completion:3.61, gap:0.36,
+  { name:'עטרה בר סלע', designTheme:'עדין ומכבד, גווני בורדו ובז\u0027 חמים', tag:'חרדי', role:'מנהלת צוות אזורי חרדי', n:11, completion:3.61, gap:0.36,
     axes:{ ud:0, core:36, matrix:36, cross:9, early:9, multi:18 },
     mgr:{ know:3.75, service:3.88, rules:3.63, sat:3.75, n:8 },
     sizeFlag:'שלושת העובדים החסרים בקובץ המנהל הם בדיוק שלושת בעלי תפקידי "מרכז תחום" בשפ"ח (שיקומי / טיפול רגשי / קידום הורות) — עובדים שפועלים דרך מרכז מקצועי חוצה-תחנות, ולא בהכרח תחת ניהול יומיומי של מנהלת התחנה. כנראה משקף את מבנה העבודה המטריציוני, ולא טעות בנתונים.' },
-  { name:'טל גרין-אפל', tag:null, role:'מנהלת צוות אזורי', n:10, completion:3.17, gap:1.15,
+  { name:'טל גרין-אפל', designTheme:'אנרגטי ובהיר, גווני טורקיז וקורל', tag:null, role:'מנהלת צוות אזורי', n:10, completion:3.17, gap:1.15,
     axes:{ ud:30, core:50, matrix:40, cross:10, early:30, multi:10 },
     mgr:{ know:3.70, service:3.80, rules:3.60, sat:3.60, n:10 } },
-  { name:'ילנה נודלמן', tag:null, role:'מנהלת צוות אזורי', n:10, completion:4.00, gap:0.00,
+  { name:'ילנה נודלמן', designTheme:'מינימלי ונקי, שחור-לבן עם נגיעת זהב', tag:null, role:'מנהלת צוות אזורי', n:10, completion:4.00, gap:0.00,
     axes:{ ud:0, core:40, matrix:30, cross:0, early:10, multi:0 },
     mgr:{ know:3.91, service:3.82, rules:3.91, sat:4.00, n:11 } },
-  { name:'חיים אהר וייס', tag:null, role:'מנהל צוות אזורי', n:9, completion:3.50, gap:0.64,
+  { name:'חיים אהר וייס', designTheme:'יציב ומקצועי, גווני חום אדמה וירוק כהה', tag:null, role:'מנהל צוות אזורי', n:9, completion:3.50, gap:0.64,
     axes:{ ud:22, core:67, matrix:0, cross:0, early:11, multi:0 },
     mgr:{ know:3.44, service:3.44, rules:3.44, sat:3.44, n:9 } },
-  { name:'מרים אסת רוזנברג', tag:null, role:'מנהלת צוות אזורי', n:9, completion:3.52, gap:0.60,
+  { name:'מרים אסת רוזנברג', designTheme:'רך וחם, גווני אפרסק וחול', tag:null, role:'מנהלת צוות אזורי', n:9, completion:3.52, gap:0.60,
     axes:{ ud:0, core:100, matrix:0, cross:0, early:44, multi:0 },
     mgr:{ know:3.56, service:3.89, rules:3.78, sat:3.78, n:9 } },
-  { name:'ליאת פלד ביתן', tag:'חרדי', role:'מנהלת צוות אזורי חרדי', n:8, completion:3.57, gap:0.07,
+  { name:'ליאת פלד ביתן', designTheme:'קלאסי ומאופק, גווני כחול נייבי וזהב עמום', tag:'חרדי', role:'מנהלת צוות אזורי חרדי', n:8, completion:3.57, gap:0.07,
     axes:{ ud:0, core:12, matrix:25, cross:0, early:12, multi:25 },
     mgr:{ know:3.38, service:3.62, rules:3.50, sat:3.25, n:8 } },
-  { name:'מרי אבו חנא', tag:'מזרח העיר', role:'מנהלת צוות אזורי מזרח העיר', n:5, completion:4.17, gap:0.00,
+  { name:'מרי אבו חנא', designTheme:'תוסס ומגוון, גווני טרקוטה וטורקיז', tag:'מזרח העיר', role:'מנהלת צוות אזורי מזרח העיר', n:5, completion:4.17, gap:0.00,
     axes:{ ud:0, core:20, matrix:0, cross:20, early:20, multi:0 },
     mgr:{ know:3.69, service:3.62, rules:3.54, sat:3.46, n:13 },
     sizeFlag:'7 מתוך 10 העובדים שקיבלו הערכת מנהל ללא הערכה עצמית מרוכזים בתחנה הזו (רוב בעלי שמות ערביים). זה לא פיזור אקראי — כדאי לברר ישירות מול הצוות אם יש חסם נגישות/שפה/תזמון בכלי ההערכה העצמית.' },
-  { name:'מלכה אסרף', tag:'מינהל ומשק', role:'מנהלת מחלקה בכירה', n:2, completion:4.00, gap:0.00,
+  { name:'מלכה אסרף', designTheme:'מסודר וברור, גווני אפור-כחלחל ולבן', tag:'מינהל ומשק', role:'מנהלת מחלקה בכירה', n:2, completion:4.00, gap:0.00,
     axes:{ ud:0, core:0, matrix:50, cross:0, early:0, multi:0 },
     mgr:{ know:3.50, service:4.00, rules:3.50, sat:3.00, n:2 } },
 ];
@@ -339,6 +339,9 @@ const STATION_FACTORS = [
 let current = 'org';
 let isAdmin = false;
 let restrictedTo = null; // station index if logged in with a station code
+let domainIdx = null; // domain manager index if logged in with a domain code
+let domainQuestStep = 0;
+let domainQuestAnswers = {};
 let viewMode = 'data'; // 'data' | 'quest' (station logins only)
 let questStep = 0;
 let questAnswers = {}; // { qId: text }
@@ -364,7 +367,7 @@ const QUEST_SECTIONS = [
     { id:'q11', label:'מה מהיעדים האלה אפשר לשלב בעבודה השוטפת, ומה דורש זמן ייעודי נפרד?' },
   ]},
   { title: 'ניהול מתחים במבנה המטריציוני', qs: [
-    { id:'q15', label:'יש בתחנה שלכם עובד/ת שהמעמד הניהולי/מקצועי שלו/ה לא לגמרי חד-משמעי (למשל תפקיד שקשור גם למרכז מקצועי חוצה-תחנות)? מה זה אומר עבורכם כמנהל/ת?' },
+    { id:'q15', label:'יש בתחנה שלכם עובד/ת שנמצא בניהול מטריציוני (חבר מרכז/יחידה/פורום אחר שמונחה מקצועית על ידי גורם נוסף)? מה זה אומר עבורכם כמנהל/ת?' },
     { id:'q16', label:'מפגישת הצוות עם אפרת אגמון מ-27.8 על הנושא הזה — מה הכי חשוב לכם לקחת איתכם קדימה לתוך תכנית העבודה?' },
   ]},
   { title: 'צעד ראשון', qs: [
@@ -390,7 +393,36 @@ const ACCESS_CODES = {
   '3099': 8,  // ליאת פלד ביתן
   '6451': 9,  // מרי אבו חנא
   '4348': 10, // מלכה אסרף
+  '4774': 'domain:0', // עדיה — הגיל הרך והחינוך המיוחד
+  '8578': 'domain:1', // מיכל — מרכזים מקצועיים וממונה יסודי
+  '8930': 'domain:2', // איריס — הדרכה, התמחויות, הכשרה ופיתוח מקצועי
+  '5274': 'domain:3', // ענאן — פיתוח ומחקר ומזרח ירושלים
 };
+
+// Deputies / general שפ"ח management (not station managers) — each tied to the axis/data most relevant to their role.
+const DOMAINS = [
+  {
+    title: 'עדיה קרסנטי — הגיל הרך והחינוך המיוחד', designTheme:'משחקי ורך, גווני פסטל צהוב-ירוק', axisKey: 'early', axisLabel: 'דגש על הגיל הרך',
+    orgPct: 21,
+    note: 'הציר עם הנוכחות השנייה בגובהה בשפ"ח כולו (21% מהעובדים). התחנה הבולטת ביותר: מרים אסת רוזנברג (44%). לתשומת לב: החינוך המיוחד, שגם באחריותך, אינו מיוצג כציר נפרד בנתונים הקיימים — הפילוח כאן משקף רק את "דגש על הגיל הרך".',
+  },
+  {
+    title: 'מיכל פוקס — מרכזים מקצועיים וממונה יסודי', designTheme:'מובנה ומקצועי, גווני כחול-ירוק (טיל) גיאומטרי', axisKey: 'matrix', axisLabel: 'עבודה מטריציונית',
+    orgPct: 27,
+    note: 'קשור ישירות למתח המבני שעלה בנתונים — עובדי "מרכז תחום" בעטרה בר סלע שלא תמיד ברור מי מעריך אותם. הציר השלישי בגובהו בשפ"ח.',
+  },
+  {
+    title: 'איריס ורד — הדרכה, התמחויות, הכשרה ופיתוח מקצועי', designTheme:'אקדמי ורענן, גווני סגול ולבנדר', axisKey: null, axisLabel: 'יכולות והתנהגויות + אפשרויות ללמוד ולהתפתח',
+    orgPct: null,
+    note: 'אין ציר עירוני ייעודי לתחום זה — הנתונים הרלוונטיים ביותר הם חלק "יכולות והתנהגויות" (137 בחירות בצמיחה והתפתחות) וגורם "אפשרויות ללמוד ולהתפתח" מתוך שלושת הגורמים החשובים (45/111, 41%).',
+  },
+  {
+    title: 'ענאן סרור — פיתוח ומחקר ומזרח ירושלים', designTheme:'עשיר ומגוון, גווני זהב וברונזה', axisKey: 'multi', axisLabel: 'עבודה רב-מגזרית',
+    orgPct: 15,
+    note: 'התחנה הבולטת בציר זה: זהבה רוזנטל/הנהלה (53%, כולל מזרח העיר ברמה הארגונית), ולאחריה ליאת פלד ביתן וטל גרין-אפל. תחנת מרי אבו חנא (מזרח העיר עצמה) מציגה 0% על הציר הזה בנתוני היעדים, לצד הממצא הנפרד על משמעות בעשייה נמוכה שם — שני נתונים ששווה לקרוא יחד.',
+  },
+];
+
 
 function tryLogin(){
   const val = document.getElementById('gateInput').value.trim();
@@ -402,11 +434,13 @@ function tryLogin(){
   }
   err.textContent = '';
   if (match === 'admin'){
-    isAdmin = true; restrictedTo = null; current = 'org';
+    isAdmin = true; restrictedTo = null; domainIdx = null; current = 'org'; viewMode = 'data';
+  } else if (typeof match === 'string' && match.startsWith('domain:')){
+    isAdmin = false; restrictedTo = null; domainIdx = parseInt(match.split(':')[1], 10); current = 'org'; viewMode = 'domain';
   } else {
-    isAdmin = false; restrictedTo = match; current = match;
+    isAdmin = false; restrictedTo = match; domainIdx = null; current = match; viewMode = 'data';
   }
-  viewMode = 'data'; questStep = 0; questAnswers = {};
+  questStep = 0; questAnswers = {}; domainQuestStep = 0; domainQuestAnswers = {};
   document.getElementById('gate').style.display = 'none';
   document.getElementById('app').style.display = 'block';
   render();
@@ -417,8 +451,8 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
   if (Object.keys(questAnswers).some(k => questAnswers[k]?.trim())){
     if (!confirm('התשובות לשאלון לא נשמרות בין כניסות. לצאת בכל זאת?')) return;
   }
-  isAdmin = false; restrictedTo = null; current = 'org';
-  viewMode = 'data'; questStep = 0; questAnswers = {};
+  isAdmin = false; restrictedTo = null; domainIdx = null; current = 'org';
+  viewMode = 'data'; questStep = 0; questAnswers = {}; domainQuestStep = 0; domainQuestAnswers = {};
   document.getElementById('gateInput').value = '';
   document.getElementById('app').style.display = 'none';
   document.getElementById('gate').style.display = 'flex';
@@ -445,6 +479,36 @@ function axisMarker(axis, pct){
 
 function renderNav(){
   const nav = document.getElementById('nav');
+  if (domainIdx !== null){
+    const d = DOMAINS[domainIdx];
+    let html = `<div class="nav-head">גישה אישית</div>
+      <div style="padding:14px 16px 10px; font-size:13px; line-height:1.6; color:var(--ink-soft); border-bottom:1px solid var(--line);">
+        מחוברים כ<b style="color:var(--ink)">${d.title}</b>.
+      </div>
+      <button class="station-btn ${viewMode==='domain'?'active':''}" data-mode="domain"><span>תמונת מצב תחומית</span></button>
+      <button class="station-btn ${viewMode==='quest'?'active':''}" data-mode="quest"><span>שאלון אישי</span></button>
+      <div class="nav-head">כלל השפ"ח (כמו זהבה)</div>`;
+    html += `<button class="station-btn ${viewMode==='data' && current==='org'?'active':''}" data-mode="data" data-id="org">
+      <span>כלל השפ"ח</span><span class="n">111</span></button>`;
+    STATIONS.forEach((s,i)=>{
+      html += `<button class="station-btn ${viewMode==='data' && current===i?'active':''}" data-mode="data" data-id="${i}">
+        <span>${s.name}${s.tag?` <span style="opacity:.6">· ${s.tag}</span>`:''}</span>
+        <span class="n">${s.n}</span></button>`;
+    });
+    nav.innerHTML = html;
+    nav.querySelectorAll('[data-mode="domain"], [data-mode="quest"]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{ viewMode = btn.dataset.mode; questStep = 0; render(); });
+    });
+    nav.querySelectorAll('[data-mode="data"]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        viewMode = 'data';
+        const id = btn.dataset.id;
+        current = id==='org' ? 'org' : parseInt(id);
+        render();
+      });
+    });
+    return;
+  }
   if (restrictedTo !== null){
     // non-admin: no station switcher, just a toggle between data view and questionnaire
     nav.innerHTML = `<div class="nav-head">גישה אישית</div>
@@ -570,6 +634,12 @@ function render(){
   renderNav();
   const main = document.getElementById('main');
 
+  if (domainIdx !== null){
+    if (viewMode === 'quest'){ renderDomainQuestionnaire(main); return; }
+    if (viewMode === 'domain'){ renderDomainView(main); return; }
+    // viewMode === 'data': fall through to the shared org/station view below (same as admin)
+  }
+
   if (restrictedTo !== null && viewMode === 'quest'){
     renderQuestionnaire(main);
     return;
@@ -653,6 +723,8 @@ function buildGammaOutline(s){
   return `# תכנית עבודה — ${s.name}
 ${s.role}${s.tag?' · '+s.tag:''}
 
+*כיוון עיצובי מוצע ל-Gamma: ${s.designTheme}. לפני היצירה, הגדירו זאת תחת Theme ← Smart Theme.*
+
 ## תמונת מצב (נתונים לדוגמה — עדכנו או מחקו)
 - עמידה ביעדים (דיווח עצמי): ◻ ${s.completion.toFixed(2)} מתוך 5
 - פער דירוג מנהל מול עצמי: ◻ ${fmtGap(s.gap)}
@@ -691,16 +763,18 @@ function renderQuestSummary(main, s){
   const outline = buildGammaOutline(s);
   main.innerHTML = `
     <div class="panel-title"><h2>פרומפט למצגת — ${s.name}</h2></div>
-    <p class="panel-sub">בדקו ועדכנו את הטקסט למטה (שורות המסומנות ב-◻ הן דוגמאות/נתונים לעריכה חופשית), ואז הדביקו ב-Gamma (Paste in text).</p>
+    <p class="panel-sub">בדקו ועדכנו את הטקסט למטה (שורות המסומנות ב-◻ הן דוגמאות/נתונים לעריכה חופשית — כולל כיוון העיצוב), ואז הדביקו ב-Gamma (Paste in text).</p>
     <textarea id="gammaOutline" class="gamma-outline">${outline}</textarea>
     <div class="quest-nav">
       <button class="quest-btn secondary" id="questEditBack">חזרה לעריכת התשובות</button>
-      <div style="display:flex; gap:10px;">
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
         <button class="quest-btn secondary" id="downloadTxt">הורדה כקובץ טקסט</button>
-        <button class="quest-btn" id="copyOutline">העתק ללוח</button>
+        <button class="quest-btn secondary" id="copyOutline">העתק ללוח</button>
+        <button class="quest-btn" id="emailOutline">שלח לי במייל</button>
       </div>
     </div>
     <div class="copy-msg" id="copyMsg"></div>
+    <p style="font-size:12px; color:var(--ink-soft); margin-top:6px;">"שלח לי במייל" מוריד את הקובץ ופותח טיוטת מייל אליכם לצירוף ושליחה ידנית — טקסט בעברית ארוך לא עובר בצורה אמינה כשהוא מוטמע ישירות בגוף מייל, לכן זו הדרך הבטוחה יותר.</p>
   `;
   document.getElementById('questEditBack').addEventListener('click', ()=>{ questStep = QUEST_SECTIONS.length-1; render(); });
   document.getElementById('copyOutline').addEventListener('click', ()=>{
@@ -713,7 +787,7 @@ function renderQuestSummary(main, s){
       document.getElementById('copyMsg').textContent = 'הועתק ללוח ✓';
     });
   });
-  document.getElementById('downloadTxt').addEventListener('click', ()=>{
+  function downloadOutline(){
     const text = document.getElementById('gammaOutline').value;
     const blob = new Blob([text], {type:'text/plain;charset=utf-8'});
     const url = URL.createObjectURL(blob);
@@ -721,6 +795,178 @@ function renderQuestSummary(main, s){
     link.href = url; link.download = `תכנית_עבודה_${s.name.replace(/\s/g,'_')}.txt`;
     link.click();
     URL.revokeObjectURL(url);
+  }
+  document.getElementById('downloadTxt').addEventListener('click', downloadOutline);
+  document.getElementById('emailOutline').addEventListener('click', ()=>{
+    downloadOutline();
+    const subject = `תכנית עבודה — ${s.name}`;
+    const body = `שלום ערן,\n\nמצורף/ת קובץ התכנית שלי מהשאלון (הקובץ ירד עכשיו למחשב, בתיקיית ההורדות — יש לצרף אותו כאן לפני השליחה).\n\nתחנה: ${s.name}\n\nתודה!`;
+    const mailUrl = `mailto:eran@raviv360.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailUrl;
+    document.getElementById('copyMsg').style.color = 'var(--sage)';
+    document.getElementById('copyMsg').textContent = 'הקובץ ירד, וטיוטת מייל נפתחה — זכרו לצרף את הקובץ שהורד לפני שליחה.';
+  });
+}
+
+const DOMAIN_QUEST_SECTIONS = [
+  { title: 'קריאת הנתונים', qs: [
+    { id:'d1', label:'מה הכי מפתיע אתכם בפריסה בין התחנות?' },
+    { id:'d2', label:'אילו תחנות הכי בולטות (לחיוב או לתשומת לב), ולמה זה הגיוני מנקודת המבט התחומית שלכם?' },
+  ]},
+  { title: 'מבט כלל-ארגוני', qs: [
+    { id:'d6', label:'מעבר לתחום שלכם — מה הכי בולט לכם בתמונה הכלל-ארגונית של השפ"ח (כלל התחנות, לא רק אלו הקשורות אליכם)?' },
+    { id:'d7', label:'כחלק מהנהלת השפ"ח, ולא רק כאחראים על התחום שלכם — מה כדאי שהארגון כולו יתמקד בו השנה?' },
+  ]},
+  { title: 'עדיפויות לתחום', qs: [
+    { id:'d3', label:'מהי עדיפות אחת מרכזית לתחום שלכם לרבעון הקרוב?' },
+    { id:'d4', label:'אילו 2–3 תחנות הייתם רוצים להעמיק איתן שיתוף פעולה השנה?' },
+  ]},
+  { title: 'מסר לשיתוף', qs: [
+    { id:'d5', label:'מה המסר המרכזי שהייתם רוצים להעביר להנהלה ולמנהלי התחנות על בסיס התמונה הזו?' },
+  ]},
+];
+
+function renderDomainView(main){
+  const d = DOMAINS[domainIdx];
+  let content;
+  if (d.axisKey){
+    const rows = STATIONS.map(s => [s.name + (s.tag?` (${s.tag})`:''), s.axes[d.axisKey]]).sort((a,b)=>b[1]-a[1]);
+    const bars = rows.map(([name,val]) => `
+      <div class="comp-bar-row">
+        <div class="cat">${name}</div>
+        <div class="comp-bar-track"><div class="comp-bar-fill" style="width:${val}%; background:var(--slate)"></div></div>
+        <div class="val">${val}%</div>
+      </div>`).join('');
+    content = `
+      <div class="comp-section">
+        <h3>${d.axisLabel} — לפי תחנה</h3>
+        <p class="comp-note">אחוז העובדים בכל תחנה עם יעד אישי הנוגע לציר זה. ממוצע כלל-ארגוני: ${d.orgPct}%.</p>
+        <div class="comp-bars">${bars}</div>
+      </div>`;
+  } else {
+    content = compSection() + factorsSection(null);
+  }
+  main.innerHTML = `
+    <div class="panel-title"><h2>${d.title}</h2></div>
+    <p class="panel-sub">תמונת מצב תחומית, מרוכזת מכל 11 התחנות.</p>
+    ${content}
+    <div class="comp-section">
+      <h3>מה שווה לשים לב אליו</h3>
+      <p class="comp-note" style="color:var(--ink); font-size:13px;">${d.note}</p>
+    </div>
+  `;
+}
+
+function renderDomainQuestionnaire(main){
+  const d = DOMAINS[domainIdx];
+  const totalSteps = DOMAIN_QUEST_SECTIONS.length;
+  if (domainQuestStep < totalSteps){
+    const section = DOMAIN_QUEST_SECTIONS[domainQuestStep];
+    const qsHtml = section.qs.map(q => `
+      <div class="quest-q">
+        <label>${q.label}</label>
+        <textarea data-dqid="${q.id}" rows="3" placeholder="כתבו כאן...">${domainQuestAnswers[q.id]||''}</textarea>
+      </div>`).join('');
+    main.innerHTML = `
+      <div class="panel-title"><h2>שאלון אישי — ${d.title}</h2></div>
+      <p class="panel-sub">חלק ${domainQuestStep+1} מתוך ${totalSteps}: ${section.title}<br>(התשובות לא נשמרות אוטומטית בין כניסות)</p>
+      <div class="quest-progress"><div class="quest-progress-fill" style="width:${Math.round(domainQuestStep/totalSteps*100)}%"></div></div>
+      <div class="quest-form">${qsHtml}</div>
+      <div class="quest-nav">
+        ${domainQuestStep>0 ? `<button class="quest-btn secondary" id="dqBack">הקודם</button>` : `<span></span>`}
+        <button class="quest-btn" id="dqNext">${domainQuestStep===totalSteps-1?'סיום — לבניית האינפוגרפיקה':'הבא'}</button>
+      </div>
+    `;
+    main.querySelectorAll('textarea[data-dqid]').forEach(ta=>{
+      ta.addEventListener('input', ()=>{ domainQuestAnswers[ta.dataset.dqid] = ta.value; });
+    });
+    if (domainQuestStep>0) document.getElementById('dqBack').addEventListener('click', ()=>{ domainQuestStep--; render(); });
+    document.getElementById('dqNext').addEventListener('click', ()=>{ domainQuestStep++; render(); });
+  } else {
+    renderDomainQuestSummary(main, d);
+  }
+}
+
+function buildDomainGammaOutline(d, a){
+  const ph = (val, note) => (val && val.trim()) ? val.trim() : `◻ ${note} — מלאו או מחקו`;
+  let statLines;
+  if (d.axisKey){
+    const rows = STATIONS.map(s => [s.name, s.axes[d.axisKey]]).sort((x,y)=>y[1]-x[1]);
+    statLines = rows.map(([n,v]) => `- ${n}: ${v}%`).join('\n');
+  } else {
+    statLines = '- נתוני "יכולות והתנהגויות" (137 בחירות בצמיחה והתפתחות) וגורם "אפשרויות ללמוד ולהתפתח" (45/111) — ר\' פירוט בתצוגת "תמונת מצב תחומית" בכלי';
+  }
+  return `# תמונת מצב תחומית — ${d.title}
+
+*כיוון עיצובי מוצע ל-Gamma: ${d.designTheme}. לפני היצירה, הגדירו זאת תחת Theme ← Smart Theme.*
+
+**התחום:** ${d.axisLabel}${d.orgPct !== null ? ` (ממוצע ארגוני: ${d.orgPct}%)` : ''}
+
+**פילוח לפי תחנה:**
+${statLines}
+
+**מה בולט בנתונים:** ${d.note}
+
+**מה מפתיע בפריסה בין התחנות:** ${ph(a.d1,'תשובה')}
+
+**תחנות בולטות ולמה:** ${ph(a.d2,'תשובה')}
+
+**מה בולט בתמונה הכלל-ארגונית, מעבר לתחום שלי:** ${ph(a.d6,'תשובה')}
+
+**במה כדאי שהארגון כולו יתמקד השנה:** ${ph(a.d7,'תשובה')}
+
+**עדיפות מרכזית לרבעון הקרוב:** ${ph(a.d3,'תשובה')}
+
+**תחנות להעמקת שיתוף פעולה:** ${ph(a.d4,'תשובה')}
+
+**מסר מרכזי להנהלה ולמנהלי התחנות:** ${ph(a.d5,'תשובה')}`;
+}
+
+function renderDomainQuestSummary(main, d){
+  const outline = buildDomainGammaOutline(d, domainQuestAnswers);
+  main.innerHTML = `
+    <div class="panel-title"><h2>פרומפט לאינפוגרפיקה — ${d.title}</h2></div>
+    <p class="panel-sub">בדקו ועדכנו את הטקסט למטה (שורות המסומנות ב-◻ הן דוגמאות/נתונים לעריכה חופשית — כולל כיוון העיצוב). ב-Gamma בחרו "Paste in text" ואופציית "One page" / כרטיס בודד, כדי לקבל אינפוגרפיקה אחת ולא מצגת מרובת שקופיות.</p>
+    <textarea id="domainOutline" class="gamma-outline">${outline}</textarea>
+    <div class="quest-nav">
+      <button class="quest-btn secondary" id="dqEditBack">חזרה לעריכת התשובות</button>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="quest-btn secondary" id="dqDownload">הורדה כקובץ טקסט</button>
+        <button class="quest-btn secondary" id="dqCopy">העתק ללוח</button>
+        <button class="quest-btn" id="dqEmail">שלח לי במייל</button>
+      </div>
+    </div>
+    <div class="copy-msg" id="dqMsg"></div>
+  `;
+  document.getElementById('dqEditBack').addEventListener('click', ()=>{ domainQuestStep = DOMAIN_QUEST_SECTIONS.length-1; render(); });
+  document.getElementById('dqCopy').addEventListener('click', ()=>{
+    const ta = document.getElementById('domainOutline');
+    ta.select();
+    navigator.clipboard.writeText(ta.value).then(()=>{
+      document.getElementById('dqMsg').textContent = 'הועתק ללוח ✓';
+    }).catch(()=>{
+      document.execCommand('copy');
+      document.getElementById('dqMsg').textContent = 'הועתק ללוח ✓';
+    });
+  });
+  function downloadDomainOutline(){
+    const text = document.getElementById('domainOutline').value;
+    const blob = new Blob([text], {type:'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url; link.download = `תמונת_מצב_${d.title.replace(/\s/g,'_')}.txt`;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+  document.getElementById('dqDownload').addEventListener('click', downloadDomainOutline);
+  document.getElementById('dqEmail').addEventListener('click', ()=>{
+    downloadDomainOutline();
+    const subject = `תמונת מצב תחומית — ${d.title}`;
+    const body = `שלום ערן,\n\nמצורף/ת קובץ תמונת המצב התחומית שלי מהשאלון (הקובץ ירד עכשיו למחשב, בתיקיית ההורדות — יש לצרף אותו כאן לפני השליחה).\n\nתחום: ${d.title}\n\nתודה!`;
+    const mailUrl = `mailto:eran@raviv360.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailUrl;
+    document.getElementById('dqMsg').style.color = 'var(--sage)';
+    document.getElementById('dqMsg').textContent = 'הקובץ ירד, וטיוטת מייל נפתחה — זכרו לצרף את הקובץ שהורד לפני שליחה.';
   });
 }
 
