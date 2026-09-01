@@ -903,29 +903,37 @@ const DOMAIN_QUEST_SECTIONS = [
   ]},
 ];
 
+function axisStationBlock(axis, isPrimary){
+  const rows = STATIONS.map(s => [s.name + (s.tag?` (${s.tag})`:''), s.axes[axis.key]]).sort((a,b)=>b[1]-a[1]);
+  const bars = rows.map(([name,val]) => `
+      <div class="comp-bar-row">
+        <div class="cat">${name}</div>
+        <div class="comp-bar-track"><div class="comp-bar-fill" style="width:${val}%; background:${isPrimary?'var(--gold)':'var(--slate)'}"></div></div>
+        <div class="val">${val}%</div>
+      </div>`).join('');
+  const orgPct = ORG_AXES[axis.key];
+  const primaryTag = isPrimary ? ` <span style="font-size:11px; background:var(--gold-soft); color:var(--ink); border:1px solid var(--gold); border-radius:12px; padding:2px 10px; font-weight:600;">הציר שלכם</span>` : '';
+  return `
+    <div class="comp-section" style="${isPrimary ? 'border:1.5px solid var(--gold);' : ''}">
+      <h3>${axis.label} — לפי תחנה${primaryTag}</h3>
+      <p class="comp-note">אחוז העובדים בכל תחנה עם יעד אישי הנוגע לציר זה. ממוצע כלל-ארגוני: ${orgPct}%.</p>
+      <div class="comp-bars">${bars}</div>
+    </div>`;
+}
+
 function renderDomainView(main){
   const d = DOMAINS[domainIdx];
   let content;
   if (d.axisKey){
-    const rows = STATIONS.map(s => [s.name + (s.tag?` (${s.tag})`:''), s.axes[d.axisKey]]).sort((a,b)=>b[1]-a[1]);
-    const bars = rows.map(([name,val]) => `
-      <div class="comp-bar-row">
-        <div class="cat">${name}</div>
-        <div class="comp-bar-track"><div class="comp-bar-fill" style="width:${val}%; background:var(--slate)"></div></div>
-        <div class="val">${val}%</div>
-      </div>`).join('');
-    content = `
-      <div class="comp-section">
-        <h3>${d.axisLabel} — לפי תחנה</h3>
-        <p class="comp-note">אחוז העובדים בכל תחנה עם יעד אישי הנוגע לציר זה. ממוצע כלל-ארגוני: ${d.orgPct}%.</p>
-        <div class="comp-bars">${bars}</div>
-      </div>`;
+    const primaryAxis = AXES.find(a => a.key === d.axisKey);
+    const otherAxes = AXES.filter(a => a.key !== d.axisKey);
+    content = axisStationBlock(primaryAxis, true) + otherAxes.map(a => axisStationBlock(a, false)).join('');
   } else {
     content = compSection() + factorsSection(null);
   }
   main.innerHTML = `
     <div class="panel-title"><h2>${d.title}</h2></div>
-    <p class="panel-sub">תמונת מצב תחומית, מרוכזת מכל 11 התחנות.</p>
+    <p class="panel-sub">תמונת מצב תחומית, מרוכזת מכל 11 התחנות. הציר המיועד לתפקיד שלכם מסומן ומופיע ראשון — כל ששת הצירים העירוניים זמינים כאן לצפייה.</p>
     ${content}
     <div class="comp-section">
       <h3>מה שווה לשים לב אליו</h3>
